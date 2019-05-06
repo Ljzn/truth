@@ -17,3 +17,17 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+![look](./4.png)
+
+- remote public key:
+The the public key belongs to who you are chatting with. (default is me).
+
+- new message:
+You can type any messages in textarea, then click send button. TRUTH will generate a moneybutton,
+with the encrypted message data in opreturn.
+
+- find my chat history:
+Query with Bitdb, to find all chat history related with your public key. And decrypt the message.
+
+TRUTH use ECDH to generate share secret.
+
