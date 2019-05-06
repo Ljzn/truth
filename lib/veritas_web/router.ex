@@ -17,7 +17,11 @@ defmodule VeritasWeb.Router do
   scope "/", VeritasWeb do
     pipe_through :browser
 
+    get "/keys", PageController, :keys
     get "/about", PageController, :about
+    get "/conversation/:script", PageController, :conversation
+    get "/history", PageController, :history
+    get "/conversation", PageController, :conversation
     get "/", PageController, :index
   end
 

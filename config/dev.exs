@@ -52,7 +52,8 @@ config :veritas, VeritasWeb.Endpoint,
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
       ~r{lib/veritas_web/views/.*(ex)$},
-      ~r{lib/veritas_web/templates/.*(eex)$}
+      ~r{lib/veritas_web/templates/.*(eex)$},
+      ~r{lib/my_app_web/live/.*(ex)$}
     ]
   ]
 

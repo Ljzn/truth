@@ -1,0 +1,5 @@
+<h1>Private Key</h1>
+<p><%= @keys.privkey |> Base.encode16() %></p>
+
+<h1>Public Key</h1>
+<p><%= @keys.pubkey |> Base.encode16() %></p>

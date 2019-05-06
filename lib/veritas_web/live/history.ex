@@ -1,18 +1,11 @@
-defmodule VeritasWeb.VeritasLive do
+defmodule VeritasWeb.HistoryLive do
   use Phoenix.LiveView
 
 
   def render(assigns) do
     ~L"""
-    <ul>
-      <li>
-        <a href="/conversation"><button class="column column-50">Begin New Conversation</button></a>
-      </li>
-    </div>
+    <h1>History</h1>
     """
-      # <li>
-      #   <a href="/history"><button class="column column-50">Search My Chat History</button></a>
-      # </li>
   end
 
   @state %{

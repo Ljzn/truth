@@ -7,8 +7,29 @@ defmodule VeritasWeb.PageController do
     |> live_render(VeritasWeb.VeritasLive, session: %{})
   end
 
+
+  def conversation(conn, data) do
+    conn
+    |> assign(:script, data["script"])
+    |> put_layout(:app)
+    |> live_render(VeritasWeb.ChatLive, session: %{})
+  end
+
+  def history(conn, _) do
+    conn
+    |> put_layout(:app)
+    |> live_render(VeritasWeb.HistoryLive, session: %{})
+  end
+
   def about(conn, _) do
     conn
     |> render("about.html")
+  end
+
+  def keys(conn, _) do
+    keys = Veritas.KeyChain.my_keys()
+    conn
+    |> assign(:keys, keys)
+    |> render("keys.html")
   end
 end

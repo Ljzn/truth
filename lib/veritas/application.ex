@@ -9,6 +9,7 @@ defmodule Veritas.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
+      Veritas.KeyChain,
       VeritasWeb.Endpoint
       # Starts a worker by calling: Veritas.Worker.start_link(arg)
       # {Veritas.Worker, arg},

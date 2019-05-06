@@ -12,19 +12,34 @@
       <section class="container">
         <nav role="navigation">
           <ul>
+            <li><a href="/keys">keys</a></li>
             <li><a href="/about">about</a></li>
           </ul>
         </nav>
         <a href="/">
-          <h1><strong>TRUTH</storng></h1>
+          <h1>TRUTH</h1>
         </a>
       </section>
     </header>
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <%= if script = @conn.assigns[:script] do %>
+      <label>Script:</label>
+      <textarea><%= script %></textarea>
+      <p>Drag this money button to send your chat message.</p>
+      <div class='money-button'
+        data-outputs='[{
+          "type": "SCRIPT",
+          "script": "<%= script %>",
+          "amount": "0",
+          "currency": "BSV"
+        }]'
+      ></div>
+      <% end %>
       <%= render @view_module, @view_template, assigns %>
     </main>
+    <script src="https://www.moneybutton.com/moneybutton.js"></script>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
