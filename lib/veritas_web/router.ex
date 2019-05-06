@@ -19,7 +19,7 @@ defmodule VeritasWeb.Router do
 
     get "/keys", PageController, :keys
     get "/about", PageController, :about
-    get "/conversation/:script", PageController, :conversation
+    get "/conversation/:script/:text", PageController, :conversation
     get "/history", PageController, :history
     get "/conversation", PageController, :conversation
     get "/", PageController, :index

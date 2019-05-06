@@ -11,6 +11,7 @@ defmodule VeritasWeb.PageController do
   def conversation(conn, data) do
     conn
     |> assign(:script, data["script"])
+    |> assign(:text, data["text"])
     |> put_layout(:app)
     |> live_render(VeritasWeb.ChatLive, session: %{})
   end

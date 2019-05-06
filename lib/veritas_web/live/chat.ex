@@ -15,7 +15,7 @@ defmodule VeritasWeb.ChatLive do
     <form phx-change="text-change">
       <label>New Message</label>
       <textarea name="text"></textarea>
-      <a href="/conversation/<%= @script %>"><button type="button">send</button></a>
+      <a href="/conversation/<%= @script %>/<%= @text %>"><button type="button">send</button></a>
     </form>
 
 
@@ -26,6 +26,7 @@ defmodule VeritasWeb.ChatLive do
   end
 
   @state %{
+    text: "",
     result: "",
     query: "",
     moneybutton: "",
@@ -34,7 +35,6 @@ defmodule VeritasWeb.ChatLive do
     secret: nil,
     privkey: nil,
     pubkey: nil,
-    messages: ["hello"],
     remote_pubkey: Base.decode16!("046F0EBDADE003F710E6481982726759A19CB65731ADBFF3DC7C787F693B808090587D2F3BDFAC7719215C871DD39A0CC3BD2694679C3A0DE0313CFD218E5BE360"), # Jay's pubkey
   }
 
@@ -80,7 +80,7 @@ defmodule VeritasWeb.ChatLive do
     # {:noreply, assign(socket, :moneybutton, moneybutton)}
     script = make_script(socket.assigns.pubkey, socket.assigns.remote_pubkey, encrypted)
 
-    {:noreply, assign(socket, :script, script)}
+    {:noreply, assign(socket, :script, script) |> assign(:text, text)}
   end
 
   def handle_event("find", _, socket) do
@@ -93,7 +93,11 @@ defmodule VeritasWeb.ChatLive do
 
       """
     end)
-    {:noreply, assign(socket, :result, result)}
+    if result == [] do
+      {:noreply, assign(socket, :result, "not found, please wait a minute :P")}
+    else
+      {:noreply, assign(socket, :result, result)}
+    end
   end
 
   def make_script(pub1, pub2, data) do

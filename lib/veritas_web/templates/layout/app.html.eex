@@ -27,7 +27,7 @@
       <%= if script = @conn.assigns[:script] do %>
       <label>Script:</label>
       <textarea><%= script %></textarea>
-      <p>Drag this money button to send your chat message.</p>
+      <p>Drag this money button to send your chat message: <%= @text %></p>
       <div class='money-button'
         data-outputs='[{
           "type": "SCRIPT",
