@@ -1,4 +1,20 @@
 <p>
-TRUTH is a conversation backend.
-
+TRUTH is a client-side software, which provides a secure and private chat environment, as well as the persistent chat data query.
 <p>
+
+<h1>Main steps of conversation</h1>
+
+<section>
+<p>1. Bob and Alice use TRUTH to generate ECDH keypairs.</p>
+<img src=<%= Routes.static_path(@conn, "/images/1.png") %> />
+</section>
+
+<section>
+<p>2. Exchange their pubkeys with normal communication methods.</p>
+<img src=<%= Routes.static_path(@conn, "/images/2.png") %> />
+</section>
+
+<section>
+<p>3. Use BSV blockchain for broadcasting and recording.</p>
+<img src=<%= Routes.static_path(@conn, "/images/3.png") %> />
+</section>
