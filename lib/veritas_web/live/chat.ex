@@ -72,9 +72,9 @@ defmodule VeritasWeb.ChatLive do
   def handle_event("text-change", data, socket) do
     text = data["text"]
     encrypted = ExthCrypto.AES.encrypt(text, :ecb, socket.assigns.secret)
-    IO.inspect encrypted
+    # IO.inspect encrypted
     decrypted = ExthCrypto.AES.decrypt(encrypted, :ecb, socket.assigns.secret) |> binary_trim_leading_zero()
-    IO.inspect decrypted, label: "decrypted text"
+    # IO.inspect decrypted, label: "decrypted text"
 
     # moneybutton = make_moneybutton(socket.assigns.pubkey, socket.assigns.remote_pubkey, encrypted)
     # {:noreply, assign(socket, :moneybutton, moneybutton)}
@@ -130,7 +130,7 @@ defmodule VeritasWeb.ChatLive do
         "limit":10
       }
     }
-    """ |> Base.encode64()
+    """ |> Base.encode64() |> IO.inspect(label: "query")
   end
 
 end

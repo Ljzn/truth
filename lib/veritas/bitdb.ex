@@ -7,9 +7,9 @@ defmodule Veritas.Bitdb do
   plug Tesla.Middleware.JSON
 
   def query(q) do
-    case get(q) do
+    case get(q) |> IO.inspect() do
       {:ok, resp} ->
-        {:ok, Map.get(resp.body, "c")}
+        {:ok, Map.get(resp.body, "u")}
       {:error, msg} ->
         {:error, msg}
     end
