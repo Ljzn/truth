@@ -9,7 +9,13 @@ defmodule Veritas.Bitdb do
   def query(q) do
     case get(q) |> IO.inspect() do
       {:ok, resp} ->
-        {:ok, Map.get(resp.body, "u")}
+        case Map.get(resp.body, "u") do
+          [] ->
+            {:ok, Map.get(resp.body, "c")}
+          _ ->
+            {:ok, Map.get(resp.body, "u")}
+        end
+
       {:error, msg} ->
         {:error, msg}
     end

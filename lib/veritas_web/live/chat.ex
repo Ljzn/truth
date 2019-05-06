@@ -98,7 +98,7 @@ defmodule VeritasWeb.ChatLive do
       """
     end)
     if result == [] do
-      {:noreply, assign(socket, :result, "not found, please wait a minute :P")}
+      {:noreply, assign(socket, :result, ["not found, please wait a minute :P"])}
     else
       {:noreply, assign(socket, :result, result)}
     end
