@@ -20,11 +20,14 @@ defmodule VeritasWeb.ChatLive do
 
 
     <label>Find My Chat History</label>
-    <a href="https://babel.bitdb.network/query/<%= @query %>"<button type="button">find</button></a>
+    <button phx-click="find" >find</button>
+    <p><%= @result %></p>
     """
   end
 
   @state %{
+    result: "",
+    query: "",
     moneybutton: "",
     script: "",
     warning: "",
@@ -39,7 +42,8 @@ defmodule VeritasWeb.ChatLive do
     keys = Veritas.KeyChain.my_keys()
     state = %{
       @state |
-      secret: ExthCrypto.ECIES.ECDH.generate_shared_secret(keys.privkey, @state.remote_pubkey)
+      secret: ExthCrypto.ECIES.ECDH.generate_shared_secret(keys.privkey, @state.remote_pubkey),
+      query: make_query(keys.pubkey)
     }
     {:ok, assign(socket, state) |> assign(keys)}
   end
@@ -79,9 +83,17 @@ defmodule VeritasWeb.ChatLive do
     {:noreply, assign(socket, :script, script)}
   end
 
-  def handle_event("refresh", _, socket) do
+  def handle_event("find", _, socket) do
+    q = socket.assigns.query
+    {:ok, result} = Veritas.Bitdb.query(q)
+    result = Enum.map(result, fn x ->
+      """
+      txid: #{x["tx"]["h"]},
+      mseeage: #{hd(x["out"])["h3"] |> decrypt(socket)}
 
-    {:noreply, socket}
+      """
+    end)
+    {:noreply, assign(socket, :result, result)}
   end
 
   def make_script(pub1, pub2, data) do
@@ -92,7 +104,29 @@ defmodule VeritasWeb.ChatLive do
     :erlang.binary_to_list(bin) |> Enum.drop_while(fn x -> x == 0 end) |> :erlang.list_to_binary()
   end
 
+  defp decrypt(xmsg, socket) do
+    xmsg = xmsg |> Base.decode16!(case: :lower)
+    ExthCrypto.AES.decrypt(xmsg, :ecb, socket.assigns.secret) |> binary_trim_leading_zero()
+  end
+
 
   defp bin2hex(bin), do: Base.encode16(bin, case: :lower)
+
+  def make_query(pubkey) do
+    """
+    {
+      "v":3,
+      "q":{
+        "find":{
+            "$or": [
+              {"out.h1":"#{bin2hex(pubkey)}"},
+              {"out.h2":"#{bin2hex(pubkey)}"}
+            ]
+        },
+        "limit":10
+      }
+    }
+    """ |> Base.encode64()
+  end
 
 end
