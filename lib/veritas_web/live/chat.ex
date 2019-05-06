@@ -21,13 +21,17 @@ defmodule VeritasWeb.ChatLive do
 
     <label>Find My Chat History</label>
     <button phx-click="find" >find</button>
-    <p><%= @result %></p>
+    <ul>
+    <%= for x <- @result do %>
+      <li><%= x %></li>
+    <% end %>
+    </ul>
     """
   end
 
   @state %{
     text: "",
-    result: "",
+    result: [],
     query: "",
     moneybutton: "",
     script: "",
